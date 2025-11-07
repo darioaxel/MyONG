@@ -8,11 +8,12 @@ class Direccion(models.Model):
     piso = models.CharField(max_length=10, blank=True, null=True)
     otros = models.CharField(max_length=50, blank=True, null=True)
     ciudad = models.CharField(max_length=100)
+    provincia = models.CharField(max_length=50)
     codigo_postal = models.DecimalField(max_digits=5, decimal_places=0)
     pais = models.CharField(max_length=100)
     
     def __str__(self):
-        return f"{self.calle}, {self.ciudad}, {self.pais}"
+        return f"{self.calle}, {self.numero}, {self.ciudad} ({self.pais})"
     
 class Socio(models.Model):
     id = models.UUIDField(primary_key=True, editable=False)
@@ -25,6 +26,9 @@ class Socio(models.Model):
     menor_edad = models.BooleanField()
     IBAN = models.CharField(max_length=34, blank=True, null=True)
     documento_identidad = models.CharField(max_length=9, unique=True, null=True)
+    
+    # Relación uno a uno con dirección
+    direccion = models.OneToOneField(Direccion, on_delete=models.CASCADE, related_name='socio')
     
     def __str__(self):
         return self.nombre

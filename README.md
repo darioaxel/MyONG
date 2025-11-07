@@ -26,3 +26,7 @@ Modificamos la primera versión para añadir un modelo con la dirección:
     * [x] ciudad (localidad)
     * [x] provincia
     * [x] país
+
+## Vistas: Socio
+* [ ] Mostrar el listado de todos los socios (sólo se muestra DNI, nombre y apellidos)
+* [ ] Mostrar el detalle de un socio 

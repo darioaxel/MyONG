@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>{{ socio.nombre }} {{ socio.apellidos }}</h1>
+
+  <p><strong>DNI/NIE:</strong> {{ socio.documento_identidad }}</p>
+  <p><strong>Teléfono:</strong> {{ socio.telefono }}</p>
+  <p><strong>Email:</strong> {{ socio.email }}</p>
+  <p><strong>Fecha de nacimiento:</strong> {{ socio.fecha_nacimiento }}</p>
+
+  <h3>Dirección</h3>
+  <p>
+    {{ socio.direccion.calle }}, {{ socio.direccion.numero }}
+    {% if socio.direccion.piso %} - {{ socio.direccion.piso }}{% endif %}
+    <br>
+    {{ socio.direccion.codigo_postal }} {{ socio.direccion.ciudad }}
+    ({{ socio.direccion.provincia }}) - {{ socio.direccion.pais }}
+  </p>
+
+  {% if socio.IBAN %}
+    <p><strong>IBAN:</strong> {{ socio.IBAN }}</p>
+  {% else %}
+    <p><em>Pago mediante transferencia (sin IBAN).</em></p>
+  {% endif %}
+
+  {% if socio.menor_edad %}
+    <p style="color: red;"><strong>⚠ Socio menor de edad</strong></p>
+  {% endif %}
+{% endblock %}
