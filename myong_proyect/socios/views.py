@@ -57,7 +57,7 @@ SOCIOS = json.loads(SOCIOS_JSON)
 
 # VISTA DE LISTA DE SOCIOS
 def lista_socios(request):
-    return render(request, 'myong/socio_list.html', {'socios': SOCIOS})
+    return render(request, 'socio_list.html', {'socios': SOCIOS})
 
 
 # VISTA DE DETALLE DE UN SOCIO
