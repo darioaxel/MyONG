@@ -30,3 +30,12 @@ Modificamos la primera versión para añadir un modelo con la dirección:
 ## Vistas: Socio
 * [ ] Mostrar el listado de todos los socios (sólo se muestra DNI, nombre y apellidos)
 * [ ] Mostrar el detalle de un socio 
+
+## Tareas a realizar
+
+* [x] Actualizar el modelo de socios añadiendo tutores y roles
+* [ ] Genera vistas en dos formatos: usando el modelo completo y solo con parte de él
+* [ ] Configurar la aplicación para utilizar Postgres
+* [ ] Implementar herencia entre los tipos de socios
+* [ ] Formularios para crear un socio y validación de datos
+* [ ]  
