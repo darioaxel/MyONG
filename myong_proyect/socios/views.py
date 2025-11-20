@@ -1,7 +1,11 @@
-from django.shortcuts import render
+# socios/views.py
 from django.http import Http404
 import json
 import uuid
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import SocioForm, DireccionForm, TutorForm
+from .models import Socio, Direccion, Tutor
 
 # Datos simulados (normalmente vendrían de la base de datos)
 SOCIOS_JSON = """
@@ -57,7 +61,7 @@ SOCIOS = json.loads(SOCIOS_JSON)
 
 # VISTA DE LISTA DE SOCIOS
 def lista_socios(request):
-    return render(request, 'socio_list.html', {'socios': SOCIOS})
+    return render(request, 'socios/socio_list.html', {'socios': SOCIOS})
 
 
 # VISTA DE DETALLE DE UN SOCIO
@@ -66,4 +70,41 @@ def detalle_socio(request, socio_id):
     if socio is None:
         raise Http404("Socio no encontrado")
 
-    return render(request, 'socio_detail.html', {'socio': socio})
+    return render(request, 'socios/socio_detail.html', {'socio': socio})
+
+
+def alta_socio(request):
+    if request.method == 'POST':
+        socio_form = SocioForm(request.POST)
+        direccion_form = DireccionForm(request.POST, prefix='direccion')
+        tutor_form = TutorForm(request.POST, prefix='tutor')
+        
+        if socio_form.is_valid() and direccion_form.is_valid():
+            # Guardar dirección primero
+            direccion = direccion_form.save()
+            
+            # Guardar socio
+            socio = socio_form.save(commit=False)
+            socio.direccion = direccion
+            socio.save()
+            
+            # Si es menor de edad y se incluye tutor
+            if socio.menor_edad and tutor_form.is_valid():
+                tutor = tutor_form.save()
+                socio.tutor_legal.add(tutor)
+                messages.success(request, f'Socio {socio.nombre} {socio.apellidos} creado con tutor legal')
+            else:
+                messages.success(request, f'Socio {socio.nombre} {socio.apellidos} creado exitosamente')
+            
+            return redirect('lista_socios')  # Cambia por tu URL
+            
+    else:
+        socio_form = SocioForm()
+        direccion_form = DireccionForm(prefix='direccion')
+        tutor_form = TutorForm(prefix='tutor')
+    
+    return render(request, 'socios/alta_socio.html', {
+        'socio_form': socio_form,
+        'direccion_form': direccion_form,
+        'tutor_form': tutor_form,
+    })

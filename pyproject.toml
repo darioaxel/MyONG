@@ -9,6 +9,8 @@ python = "^3.10"
 Django = "^5.2.7"
 psycopg2-binary = "^2.9.11"
 python-decouple = "^3.8"
+django-crispy-forms = "^2.5"
+crispy-bootstrap5 = "^2025.6"
 
 [tool.poetry.dev-dependencies]
 
