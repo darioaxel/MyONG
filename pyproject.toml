@@ -7,6 +7,8 @@ authors = ["Darío Ureña <darioaxel@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 Django = "^5.2.7"
+psycopg2-binary = "^2.9.11"
+python-decouple = "^3.8"
 
 [tool.poetry.dev-dependencies]
 
