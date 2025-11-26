@@ -1,9 +1,10 @@
 from django.db import models
 from datetime import date
+import uuid
 
 # Create your models here.
 class Direccion(models.Model):
-    id = models.UUIDField(primary_key=True, editable=False)
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     calle = models.CharField(max_length=200, blank=True, null=True)
     numero = models.CharField(max_length=10, blank=True, null=True)
     piso = models.CharField(max_length=10, blank=True, null=True)
@@ -18,7 +19,7 @@ class Direccion(models.Model):
 
 # Modelo tutor legal:
 class Tutor(models.Model):
-    id = models.UUIDField(primary_key=True, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=200)
     telefono = models.DecimalField(max_digits=9, decimal_places=0)
@@ -39,7 +40,7 @@ class Tutor(models.Model):
 class Socio(models.Model):
     ROLES = [('ROOT', 'Superusuario'), ('ADMIN', 'Directivo'), ('USER', 'Usuario')]
 
-    id = models.UUIDField(primary_key=True, editable=False)
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
     nombre = models.CharField(max_length=100)
     apellidos = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
