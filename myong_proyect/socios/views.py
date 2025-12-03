@@ -69,8 +69,10 @@ def lista_socios(request):
 
 # VISTA DE DETALLE DE UN SOCIO
 def detalle_socio(request, socio_id):
-    socios = Socio.objects.select_related('direccion').all()
-    socio = next((s for s in socios if s['id'] == str(socio_id)), None)
+    socios = Socio.objects.select_related('direccion').all() 
+    print("SOCIOS ", list(socios))  # imprime todos los socios  
+    socio = next((s for s in socios if str(s.id) == str(socio_id)), None)
+    print("SOCIO ", socio)  # imprime el socio encontrado
     if socio is None:
         raise Http404("Socio no encontrado")
 
