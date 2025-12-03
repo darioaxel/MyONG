@@ -61,9 +61,9 @@ class SocioForm(forms.ModelForm):
             'menor_edad', 'domicilia_pago', 'IBAN'
         ]
         widgets = {
-            'nombre': forms.TextInput(attrs={'placeholder': 'Nombre'}),
-            'apellidos': forms.TextInput(attrs={'placeholder': 'Apellidos'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'socio@example.com'}),
+            'nombre': forms.TextInput(attrs={'placeholder': 'Miguel'}),
+            'apellidos': forms.TextInput(attrs={'placeholder': 'Aparicio Sánchez'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'socio@fpvirtualaragon.com'}),
             'fecha_nacimiento': forms.DateInput(attrs={'type': 'date'}),
             'documento_identidad': forms.TextInput(attrs={'placeholder': 'DNI/NIE'}),
             'IBAN': forms.TextInput(attrs={'placeholder': 'ES9121000418450200051332'}),
@@ -76,7 +76,7 @@ class SocioForm(forms.ModelForm):
         # Validación 1: IBAN obligatorio si domicilia pago
         if cleaned_data.get('domicilia_pago') and not cleaned_data.get('IBAN'):
             self.add_error('IBAN', 'El IBAN es obligatorio si se domicilia el pago')
-        
+           
         # Validación 2: Si es menor de edad, debe marcarse como tal
         fecha_nacimiento = cleaned_data.get('fecha_nacimiento')
         if fecha_nacimiento:

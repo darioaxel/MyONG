@@ -62,14 +62,15 @@ SOCIOS = json.loads(SOCIOS_JSON)
 # VISTA DE LISTA DE SOCIOS
 def lista_socios(request):
     # Ahora vamos a recuperar los socios desde la "base de datos"
-  #  socios = Socio.objects.select_related('direccion').all()
-   # return render(request, 'socios/socio_list.html', {'socios': socios})
-    return render(request, 'socios/socio_list.html', {'socios': SOCIOS})
+    socios = Socio.objects.select_related('direccion').all()
+    return render(request, 'socios/socio_list.html', {'socios': socios})
+   # return render(request, 'socios/socio_list.html', {'socios': SOCIOS})
 
 
 # VISTA DE DETALLE DE UN SOCIO
 def detalle_socio(request, socio_id):
-    socio = next((s for s in SOCIOS if s['id'] == str(socio_id)), None)
+    socios = Socio.objects.select_related('direccion').all()
+    socio = next((s for s in socios if s['id'] == str(socio_id)), None)
     if socio is None:
         raise Http404("Socio no encontrado")
 
