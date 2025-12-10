@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+from django.core.validators import MinValueValidator, MaxValueValidator
 import uuid
 
 # Create your models here.
@@ -71,3 +72,31 @@ class Socio(models.Model):
 
     def __str__(self):
         return self.nombre
+
+## Modelo para pagos de socios
+## Los pagos estarán relacionados con un socio
+## Cada pago tendrá una fecha, un importe y un estado (pendiente, completado, fallido)
+## Los pagos se pueden hacer por transferencia y tendrán que validarse por un admin
+## Otros pagos se realizan mediante remesa bancaria: Si se devuelve el recibo, 
+## el estado del pago será devuelto.
+class Pago(models.Model):
+    ESTADO_PAGOS = [('PENDIENTE', 'Pendiente'),
+                    ('COMPLETADO', 'Completado'), 
+                    ('EN_TRAMITE', 'En tramite'),
+                    ('DEVUELTO', 'Devuelto')]
+    
+    id = models.UUIDField(primary_key=True,default=uuid.uuid4, editable=False)
+    socio = models.ForeignKey(Socio, on_delete=models.PROTECT, related_name='pagos')
+    
+    mes = models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(12)])
+    anio = models.PositiveSmallIntegerField(validators=[MinValueValidator(2000), MaxValueValidator(2100)])
+
+    cuota_base_aplicada = models.DecimalField(max_digits=6, decimal_places=2)
+    estado = models.CharField(max_length=12, choices=ESTADO_PAGOS, default='PENDIENTE')
+
+    class Meta:
+        unique_together = ('socio', 'mes', 'anio')
+        ordering = ['-anio', '-mes']
+
+    def __str__(self):
+        return f"Pago {self.mes}/{self.anio} - {self.socio.nombre} - {self.estado}"
