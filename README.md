@@ -28,7 +28,7 @@ Modificamos la primera versión para añadir un modelo con la dirección:
     * [x] país
 
 ## Modelo: Pago
-
+    * [X] Creado el modelo con los pagos de las cuotas
 
 ## Vistas: Socio
 * [X] Mostrar el listado de todos los socios (sólo se muestra DNI, nombre y apellidos)

@@ -5,7 +5,8 @@ import uuid
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import SocioForm, DireccionForm, TutorForm
-from .models import Socio, Direccion, Tutor
+from .models import Socio, Direccion, Tutor, Pago
+from datetime import date
 
 # Datos simulados (normalmente vendrían de la base de datos)
 SOCIOS_JSON = """
@@ -113,4 +114,22 @@ def alta_socio(request):
         'socio_form': socio_form,
         'direccion_form': direccion_form,
         'tutor_form': tutor_form,
+    })
+
+def pagos_socio_ano(request, socio_id):
+    # Lógica para manejar los pagos del socio
+    current_year = date.today().year
+    current_month = date.today().month
+    
+    # Aquí iría la lógica para obtener los pagos del socio desde la base de datos
+    pagos = Pago.objects.filter(socio__id=socio_id, anio=current_year, mes__lte=current_month).order_by('mes')
+    socio = Socio.objects.get(id=socio_id)
+    return render(request, 'socios/pagos_socio_ano.html', {
+        'pagos': pagos,
+        'nombre_socio': socio.nombre,
+        'apellidos_socio': socio.apellidos,
+        'email_socio': socio.email,
+        'year': current_year,
+        'month': current_month,
+        'domicilia_pago': socio.domicilia_pago,    
     })

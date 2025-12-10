@@ -9,7 +9,10 @@
         <a href="{% url 'detalle_socio' socio.id %}">
           {{ socio.nombre }} {{ socio.apellidos }}
         </a>
-        — {{ socio.email }}
+        — {{ socio.email }} - 
+        <a href="{% url 'pagos_socio_ano' socio.id %}">
+          Ver pagos
+        </a>
       </li>
     {% endfor %}
   </ul>

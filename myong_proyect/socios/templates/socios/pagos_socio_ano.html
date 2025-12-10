@@ -1,0 +1,26 @@
+<!-- templates/socios/pagos_socio_ano.html -->
+{% extends 'base_generic.html' %} 
+{% block content %}
+<div>
+    <h2>Pagos del socio {{ socio.nombre }} {{ socio.apellidos }} para el año {{ year }}</h2>
+    <hr>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mes</th>
+                <th>Cuota</th>               
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pago in pagos %}
+            <tr>
+                <td>{{ pago.mes }}</td>
+                <td>{{ pago.cuota_base_aplicada }}</td>                
+                <td>{{ pago.estado }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
