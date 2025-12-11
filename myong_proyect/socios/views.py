@@ -116,20 +116,51 @@ def alta_socio(request):
         'tutor_form': tutor_form,
     })
 
-def pagos_socio_ano(request, socio_id):
+def pagos_socio_current_year(request, socio_id):
     # Lógica para manejar los pagos del socio
     current_year = date.today().year
     current_month = date.today().month
+
+    # Generar lista de últimos 4 años (incluyendo el actual)
+    años_disponibles = list(range(current_year - 3, current_year + 1))
     
     # Aquí iría la lógica para obtener los pagos del socio desde la base de datos
     pagos = Pago.objects.filter(socio__id=socio_id, anio=current_year, mes__lte=current_month).order_by('mes')
     socio = Socio.objects.get(id=socio_id)
-    return render(request, 'socios/pagos_socio_ano.html', {
+    return render(request, 'socios/pagos_socio_year.html', {
+        'socio_id': socio_id,
         'pagos': pagos,
         'nombre_socio': socio.nombre,
         'apellidos_socio': socio.apellidos,
         'email_socio': socio.email,
         'year': current_year,
         'month': current_month,
-        'domicilia_pago': socio.domicilia_pago,    
+        'domicilia_pago': socio.domicilia_pago,
+        'años_disponibles': años_disponibles,    
+    })
+
+def pagos_socio_by_year(request, socio_id, year):        
+    # Obtener el socio
+    pagos = Pago.objects.filter(socio__id=socio_id, anio=year).order_by('mes')
+    socio = Socio.objects.get(id=socio_id)
+
+    # Generar lista de últimos 4 años (incluyendo el actual)
+    current_year = date.today().year
+    años_disponibles = list(range(current_year - 3, current_year + 1))
+    
+    # Asegurarse de que el año solicitado está en la lista
+    if year not in años_disponibles:
+        años_disponibles.append(year)
+        años_disponibles.sort()
+    
+    return render(request, 'socios/pagos_socio_year.html', {
+        'socio_id': socio_id,
+        'pagos': pagos,
+        'nombre_socio': socio.nombre,
+        'apellidos_socio': socio.apellidos,
+        'email_socio': socio.email,
+        'year': current_year,
+        'month': 12,
+        'domicilia_pago': socio.domicilia_pago,
+        'años_disponibles': años_disponibles,    
     })

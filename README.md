@@ -42,3 +42,12 @@ Modificamos la primera versión para añadir un modelo con la dirección:
 * [ ] Implementar herencia entre los tipos de socios 
 * [X] Formularios para crear un socio y validación de datos ✓
 * [ ]  
+
+## SEED de usuarios
+
+| Socio     | Tipo Pago   | Pagos desde | Total Pagos | Estados típicos                 |
+| --------- | ----------- | ----------- | ----------- | ------------------------------- |
+| Ana María | Domiciliado | Ene 2022    | 36+         | 80% COMPLETADO, 20% DEVUELTO    |
+| Carlos    | Manual      | Ene 2022    | 36+         | 50% EN\_TRAMITE, 50% COMPLETADO |
+| Lucía     | Domiciliado | Ene 2022    | 36+         | Mixto variado                   |
+| Miguel    | Manual      | Abr 2024    | 8+          | Solo desde abril 2024           |

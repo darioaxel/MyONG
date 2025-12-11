@@ -1,3 +1,5 @@
+<!-- socios/templates/socios/socio_list.html -->
+{% extends 'base_generic.html' %}
 
 {% block content %}
   <h1>Lista de socios</h1>
@@ -10,7 +12,7 @@
           {{ socio.nombre }} {{ socio.apellidos }}
         </a>
         — {{ socio.email }} - 
-        <a href="{% url 'pagos_socio_ano' socio.id %}">
+        <a href="{% url 'pagos_socio_current_year' socio.id %}">
           Ver pagos
         </a>
       </li>
