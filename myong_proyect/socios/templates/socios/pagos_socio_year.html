@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-    <h2>Pagos de {{ socio.nombre }} {{ socio.apellidos }} - Año {{ year }}</h2>
+    <h2>Pagos de {{ nombre_socio }} {{ apellidos_socio }} - Año {{ year }}</h2>
     
     <!-- Lista de pagos del año -->
     <table class="table">
@@ -36,14 +36,14 @@
     <!-- DESPLEGABLE DE ÚLTIMOS 4 AÑOS -->
     <div class="card mt-4">
         <div class="card-body">
-            <h5>Cambiar año</h5>
-            <form method="get" action="{% url 'pagos_socio_by_year' socio_id=socio_id year=2024 %}">
+            <h5>Cambiar año: </h5>
+            <form method="get" action="{% url 'pagos_socio_by_year' socio_id=socio_id year=year %}">
                 <div class="form-group">
                     <select name="year" id="year-select" class="form-control" 
-                            onchange="this.form.action = this.form.action.replace(/\d{4}\/$/, this.value + '/'); this.form.submit();">
-                        {% for año in años_disponibles %}
-                        <option value="{{ año }}" {% if año == year %}selected{% endif %}>
-                            Año {{ año }}
+                            onchange="this.form.action = this.form.action.replace(/\d{4}\/$/, this.value + '/'); alert(this.value); this.form.submit();">
+                        {% for anyo in años_disponibles %}
+                        <option value="{{ anyo }}" {% if anyo == year %}selected{% endif %}>
+                            Año {{ anyo }}
                         </option>
                         {% endfor %}
                     </select>
